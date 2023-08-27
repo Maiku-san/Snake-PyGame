@@ -2,9 +2,10 @@ import pygame
 
 class InputControl:
 	
-	def __init__(self, game, player1):
+	def __init__(self, game, snake_1, snake_2):
 		self.game = game
-		self.player1 = player1
+		self.snake_1 = snake_1
+		self.snake_2 = snake_2
 
 
 	def handle_input(self):
@@ -34,17 +35,54 @@ class InputControl:
 				else:
 					self.game.active_map = 'Borderless Map'
 
+			if self.game.green_snake_button.check_mouse_hover_button() and event.type == pygame.MOUSEBUTTONDOWN:
+				if self.snake_1.is_active is False:
+					self.snake_1.is_active = True
+				else:
+					self.snake_1.is_active = False
+					self.snake_1.change_direction_to = ''
+					self.snake_1.is_moving = False
+					self.snake_1.head_position, self.snake_1.body_position, self.snake_1.direction = self.snake_1.spawn()
+
+				if self.game.green_snake_button.toggled == False:
+					self.game.green_snake_button.toggled = True
+				else:
+					self.game.green_snake_button.toggled = False
+			
+			if self.game.yellow_snake_button.check_mouse_hover_button() and event.type == pygame.MOUSEBUTTONDOWN:
+				if self.snake_2.is_active is False:
+					self.snake_2.is_active = True
+				else:
+					self.snake_2.is_active = False
+					self.snake_2.change_direction_to = ''
+					self.snake_2.is_moving = False
+					self.snake_2.head_position, self.snake_2.body_position, self.snake_2.direction = self.snake_2.spawn()
+				
+				if self.game.yellow_snake_button.toggled == False:
+					self.game.yellow_snake_button.toggled = True
+				else:
+					self.game.yellow_snake_button.toggled = False
+
 			# handle keyboard controls
 			if event.type == pygame.KEYDOWN:
 				if self.game.is_paused is False:
 					if event.key == pygame.K_UP:
-						self.player1.change_direction_to = 'UP'
+						self.snake_1.change_direction_to = 'UP'
 					if event.key == pygame.K_DOWN:
-						self.player1.change_direction_to = 'DOWN'
+						self.snake_1.change_direction_to = 'DOWN'
 					if event.key == pygame.K_LEFT:
-						self.player1.change_direction_to = 'LEFT'
+						self.snake_1.change_direction_to = 'LEFT'
 					if event.key == pygame.K_RIGHT:
-						self.player1.change_direction_to = 'RIGHT'
+						self.snake_1.change_direction_to = 'RIGHT'
+
+					if event.key == pygame.K_w:
+						self.snake_2.change_direction_to = 'UP'
+					if event.key == pygame.K_s:
+						self.snake_2.change_direction_to = 'DOWN'
+					if event.key == pygame.K_a:
+						self.snake_2.change_direction_to = 'LEFT'
+					if event.key == pygame.K_d:
+						self.snake_2.change_direction_to = 'RIGHT'
 
 				# press ESC to bring up menu screen and pause the game
 				if event.key == pygame.K_ESCAPE:

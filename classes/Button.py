@@ -2,13 +2,14 @@ import pygame
 
 class Button:
  
-    def __init__(self, position_x, position_y, width, height, text_content, clicked):
+    def __init__(self, position_x, position_y, width, height, text_content, clicked, toggled):
         self.position_x = position_x
         self.position_y = position_y
         self.width = width
         self.height = height
         self.text_content = text_content
         self.clicked = clicked
+        self.toggled = toggled
 
         self.rectangle = pygame.Rect(position_x, position_y, width, height)
 

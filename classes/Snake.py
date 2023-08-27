@@ -12,33 +12,35 @@ class Snake:
 	# snake is blue
 	time_being_blue = 0
 
-	def __init__(self, game, color):
+	def __init__(self, game, color, is_active):
 		self.game = game
 		self.color = color
+		self.is_active = is_active
 		self.head_position, self.body_position, self.direction = self.spawn()
 		print(f"snake head: {self.head_position}\nsnake body: {self.body_position}\nsnake facing: {self.direction}")
 		self.change_direction_to = ''
 		self.is_moving = False
 		self.frame_buffer = self.game.fps / self.speed
-
+		
+		self.original_color = color
 
 	def update(self):
+		if self.is_active:
+			if self.color == 'blue' and self.game.is_paused is False:
+				self.time_being_blue += 1
+			if self.time_being_blue == 600:
+				self.time_being_blue = 0
+				self.color = self.original_color
 
-		if self.color == 'blue' and self.game.is_paused is False:
-			self.time_being_blue += 1
-		if self.time_being_blue == 600:
-			self.time_being_blue = 0
-			self.color = 'green'
-
-		self.movement_frame_counter += 1
-		if self.movement_frame_counter == self.frame_buffer:
-			self.movement_frame_counter = 0
+			self.movement_frame_counter += 1
+			if self.movement_frame_counter == self.frame_buffer:
+				self.movement_frame_counter = 0
 		
-			self.change_direction()
-			self.move()
-			self.check_collisions()
+				self.change_direction()
+				self.move()
+				self.check_collisions()
 				
-		self.draw()
+			self.draw()
 
 	def spawn(self):
 		spawn_head =  [

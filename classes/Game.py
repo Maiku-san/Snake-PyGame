@@ -35,10 +35,12 @@ class Game:
 	menu_surface.fill((107, 107, 107))
 
 	# buttons
-	play_button = Button(250, 200, 300, 55, 'Play', False)
-	map_selection_button = Button(250, 265, 300, 55, 'Border', False)
-	quit_button = Button(250, 330, 300, 55, 'Quit', False)
-	menu_buttons = [play_button, map_selection_button, quit_button]
+	play_button = Button(250, 120, 300, 55, 'Play', False, False)
+	map_selection_button = Button(250, 195, 300, 55, 'Border', False, False)
+	green_snake_button = Button(250, 270, 300, 55, 'Green Snake', False, True)
+	yellow_snake_button = Button(250, 345, 300, 55, 'Yellow Snake', False, False)
+	quit_button = Button(250, 420, 300, 55, 'Quit', False, False)
+	menu_buttons = [play_button, map_selection_button, green_snake_button, yellow_snake_button, quit_button]
 
 	def __init__(self, list_of_fonts):
 		self.is_on = True
@@ -67,11 +69,17 @@ class Game:
 		self.screen.blit(self.menu_surface, (200, 100))
 		# buttons on menu
 		self.play_button.draw(self.screen, self.list_of_fonts[1])
+		self.green_snake_button.draw(self.screen, self.list_of_fonts[1])
+		if self.green_snake_button.toggled:
+			pygame.draw.rect(self.screen, 'green', (250, 270, 300, 55), 5)
+		self.yellow_snake_button.draw(self.screen, self.list_of_fonts[1])
+		if self.yellow_snake_button.toggled:
+			pygame.draw.rect(self.screen, 'green', (250, 345, 300, 55), 5)
 		self.quit_button.draw(self.screen, self.list_of_fonts[1])
 		# map switch button to select border/no border
 		self.map_selection_button.draw(self.screen, self.list_of_fonts[1])
 		if self.active_map == 'Border Map':
-			pygame.draw.rect(self.screen, 'green', (250, 265, 300, 55), 5)
+			pygame.draw.rect(self.screen, 'green', (250, 195, 300, 55), 5)
 
 		
 

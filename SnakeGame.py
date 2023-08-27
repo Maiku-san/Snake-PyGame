@@ -17,10 +17,11 @@ list_of_fonts = [
 
 # class instances
 game = Game(list_of_fonts)
-snake_1 = Snake(game, 'green')
-input_control = InputControl(game, snake_1)
+snake_1 = Snake(game, 'green', True)
+snake_2 = Snake(game, 'yellow', False)
+input_control = InputControl(game, snake_1, snake_2)
 fruit_1 = Fruit(game.tile_size, game.WIDTH, game.HEIGHT)
-basket = Basket(game, snake_1, fruit_1)
+basket = Basket(game, snake_1, snake_2, fruit_1)
 
 # game loop
 while game.is_on:
@@ -35,6 +36,7 @@ while game.is_on:
 	input_control.handle_input()
 	# handle player
 	snake_1.update()
+	snake_2.update()
 	# handle fruit
 	basket.of_fruits()
 	# show game screens
