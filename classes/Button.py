@@ -10,17 +10,19 @@ class Button:
         self.text_content = text_content
         self.clicked = clicked
 
+        self.rectangle = pygame.Rect(position_x, position_y, width, height)
+
 
     def draw(self, surface, font):
-        rectangle = pygame.draw.rect(surface, (45, 89, 135), (self.position_x, self.position_y, self.width, self.height))
-        
-        is_hover_button = self.check_mouse_hover_button(rectangle)
+        pygame.draw.rect(surface, (45, 89, 135), self.rectangle)
+
+        is_hover_button = self.check_mouse_hover_button()
         if is_hover_button is True:
-            pygame.draw.rect(surface, (9, 66, 227), (self.position_x, self.position_y, self.width, self.height))
+            pygame.draw.rect(surface, (9, 66, 227), self.rectangle)
             self.handle_click_event()
 
         if self.clicked is True:
-            pygame.draw.rect(surface, (10, 155, 251), (self.position_x, self.position_y, self.width, self.height))
+            pygame.draw.rect(surface, (10, 155, 251), self.rectangle)
 
         # render text content
         text_content_rendered = font.render(self.text_content, True, 'white')
@@ -29,9 +31,9 @@ class Button:
         surface.blit(text_content_rendered, text_rect)
 
 
-    def check_mouse_hover_button(self, button_shape):
+    def check_mouse_hover_button(self):
         pygame.mouse.get_pos()
-        if button_shape.collidepoint(pygame.mouse.get_pos()):
+        if self.rectangle.collidepoint(pygame.mouse.get_pos()):
             return True
         else:
             return False

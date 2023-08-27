@@ -8,18 +8,6 @@ class InputControl:
 
 
 	def handle_input(self):
-		# handle buttons
-		if self.game.quit_button.clicked is True:
-			self.game.check_high_score()
-
-			self.game.is_on = False
-
-		if self.game.play_button.clicked is True:
-			self.game.is_paused = False
-			self.game.active_screen = 'game screen'
-			for i in range(len(self.game.menu_buttons)):
-				self.game.menu_buttons[i].clicked = False
-
 		# handle events
 		for event in pygame.event.get():
 			# check if the user clicked x at the top right corner to close the game
@@ -27,6 +15,24 @@ class InputControl:
 				self.game.check_high_score()
 				
 				self.game.is_on = False
+
+			# handle buttons
+			if self.game.quit_button.clicked is True:
+				self.game.check_high_score()
+
+				self.game.is_on = False
+
+			if self.game.play_button.clicked is True:
+				self.game.is_paused = False
+				self.game.active_screen = 'game screen'
+				for i in range(len(self.game.menu_buttons)):
+					self.game.menu_buttons[i].clicked = False
+		
+			if self.game.map_selection_button.check_mouse_hover_button() and event.type == pygame.MOUSEBUTTONDOWN:
+				if self.game.active_map == 'Borderless Map':
+					self.game.active_map = 'Border Map'
+				else:
+					self.game.active_map = 'Borderless Map'
 
 			# handle keyboard controls
 			if event.type == pygame.KEYDOWN:

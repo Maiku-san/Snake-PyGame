@@ -36,8 +36,9 @@ class Game:
 
 	# buttons
 	play_button = Button(250, 200, 300, 55, 'Play', False)
-	quit_button = Button(250, 265, 300, 55, 'Quit', False)
-	menu_buttons = [play_button, quit_button]
+	map_selection_button = Button(250, 265, 300, 55, 'Border', False)
+	quit_button = Button(250, 330, 300, 55, 'Quit', False)
+	menu_buttons = [play_button, map_selection_button, quit_button]
 
 	def __init__(self, list_of_fonts):
 		self.is_on = True
@@ -67,6 +68,13 @@ class Game:
 		# buttons on menu
 		self.play_button.draw(self.screen, self.list_of_fonts[1])
 		self.quit_button.draw(self.screen, self.list_of_fonts[1])
+		# map switch button to select border/no border
+		self.map_selection_button.draw(self.screen, self.list_of_fonts[1])
+		if self.active_map == 'Border Map':
+			pygame.draw.rect(self.screen, 'green', (250, 265, 300, 55), 5)
+
+		
+
 
 	def show_score(self):
 		score_text_surface = self.list_of_fonts[0].render(f"SCORE: {self.score}", True, 'white') 
